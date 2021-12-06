@@ -87,6 +87,7 @@ def enter_account_number():
                     break
             return account_number
         except ValueError:
+            print('[ERRO] Número inválido...')
             new_try = try_again()
             if(new_try):
                 continue

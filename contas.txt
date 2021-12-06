@@ -1,2 +1,0 @@
-45;luis miguel;223.0
-23;luis teste;80.0
