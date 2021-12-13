@@ -1,4 +1,7 @@
-database = '/home/luis/Documentos/infnet/logicaComputacaoEAlgoritmos/assessment/contas.txt'
+# For Linux
+# database = '/home/luis/Documentos/infnet/logicaComputacaoEAlgoritmos/assessment/contas.txt'
+# For Windows
+database = r"C:\Users\Luis MIguel\Documents\python_bank\contas.txt"
 
 # "Database" get and save functions
 def get_all():
