@@ -18,9 +18,9 @@ def get_all():
             line = accounts.readline()
     return transaction
 
-def save_all(array):
+def save_all(list):
     with open(database, 'w') as accounts:
-        for account in array:
+        for account in list:
             accounts.write(f'{int(account[0])};{account[1]};{float(account[2])}\n')
 
 # Menu functions
@@ -95,18 +95,18 @@ def enter_balance_update_type():
         else:
             return update_type
 
-def find_index(array, account_number):
+def find_index(list, account_number):
     cont = 0
-    for account in array:
+    for account in list:
         cont += 1
         if(account[0] == account_number):
             return (cont - 1)
     return (-1)
 
-def set_account_number(array):
+def set_account_number(list):
     while True:
         account_number = enter_account_number()
-        account_number_exists = find_index(array, account_number)
+        account_number_exists = find_index(list, account_number)
         if(account_number_exists == -1):
             return account_number
         print('[ERRO] Este número de conta já está em uso, insira outro...')
@@ -129,51 +129,51 @@ def set_initial_balance():
             return initial_balance
 
 # Secundary functions
-def create_account(array):
-    account_number = set_account_number(array) 
+def create_account(list):
+    account_number = set_account_number(list) 
     account_name = set_account_name()
     initial_balance = set_initial_balance()
     account = [account_number, account_name, initial_balance]
-    array.append(account)
+    list.append(account)
     print('Conta registrada...')
 
-def remove_account(array):
+def remove_account(list):
     while True:
         account_number = enter_account_number('Digite o número da conta que deseja excluir: ')
-        index = find_index(array, account_number)
+        index = find_index(list, account_number)
         if(index == -1):
             print('[ERRO] Não foi encontrada nenhuma conta com este número...')
         else:
-            if(array[index][2] != 0):
+            if(list[index][2] != 0):
                 print('[ERRO] Para realizar esta operação o saldo da conta deve ser igual a 0')
                 return    
-            array.pop(index)
+            list.pop(index)
             return
 
-def change_account_balance(array):
+def change_account_balance(list):
     while True:
         account_number = enter_account_number('Digite o número da conta que você deseja alterar o saldo:')
-        index = find_index(array, account_number)
+        index = find_index(list, account_number)
         if(index == -1):
             print('[ERRO] Não foi encontrada nenhuma conta com este número...')
         else:
-            actual_value = array[index][2]
+            actual_value = list[index][2]
             update_type = enter_balance_update_type()
             update_value = enter_update_value()
             if(update_type == 1):
                 new_balance = (actual_value + update_value)
             else:
                 new_balance = (actual_value - update_value)
-            array[index][2] = new_balance
+            list[index][2] = new_balance
             print('Saldo alterado...')
             return 
 
-def select_negative_accounts(array):
+def select_negative_accounts(list):
     cont = 0
-    if(len(array) == 0):
+    if(len(list) == 0):
         print('Não há contas cadastradas... \n')
         return
-    for account in array:
+    for account in list:
         if(account[2] < 0):
             cont += 1
             print(f'{account} \n')
@@ -181,13 +181,13 @@ def select_negative_accounts(array):
         print('Não foram encontradas contas com saldo negativo \n')
         return
 
-def select_accounts_by_min_balance(array):
+def select_accounts_by_min_balance(list):
     cont = 0
-    if(len(array) == 0):
+    if(len(list) == 0):
         print('Não há contas cadastradas... \n')
         return
     min_value = enter_float_number('Digite um valor e receba todas as contas com saldo acima do mesmo: ')
-    for account in array:
+    for account in list:
         if(account[2] > min_value):
             cont += 1
             print(f'{account} \n')
@@ -195,23 +195,23 @@ def select_accounts_by_min_balance(array):
         print(f'Não foram encontradas contas com saldo acima de R${min_value} \n')
         return
     
-def select_all_accounts(array):
-    if(len(array) == 0):
+def select_all_accounts(list):
+    if(len(list) == 0):
         print('Não há contas cadastradas... \n')
         return
     print('----------Contas registradas---------- \n')
     print('|N° da conta | Nome do correntista | Saldo da conta| \n')
-    for account in array:
+    for account in list:
         print(f'{account} \n')
     print('-------------------------------------- \n')
 
-def manager_reports(array):
+def manager_reports(list):
     option = manager_reports_menu()
     if(option == 1):
-        select_negative_accounts(array)
+        select_negative_accounts(list)
     elif(option == 2):
-        select_accounts_by_min_balance(array)
+        select_accounts_by_min_balance(list)
     elif(option == 3):
-        select_all_accounts(array)
+        select_all_accounts(list)
     else:
         return
